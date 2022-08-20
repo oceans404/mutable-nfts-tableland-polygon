@@ -20,20 +20,34 @@ async function main() {
   const mainTable = TablelandTables.main;
   const attributesTable = TablelandTables.attributes;
 
+  // Get info for all tables associated with your account
   const tables = await tableland.list();
   console.log(tables);
 
-  const { columns, rows } = await tableland.read(
+  // Read all records in the main table
+  const { columns: mc, rows: mr } = await tableland.read(
+    `SELECT * FROM ${mainTable}`
+  );
+  console.log(mc, mr);
+
+  // Read all records in the attributes table
+  const { columns: ac, rows: ar } = await tableland.read(
     `SELECT * FROM ${attributesTable}`
   );
+  console.log(ac, ar);
 
-  console.log(columns, rows);
+  ///////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////
+  // MODIFY THIS TO YOUR LIKING! Update the attributes table with SQL
 
   const updateTable = await tableland.write(
-    `UPDATE ${attributesTable} SET value = 'Green' WHERE main_id = 0 AND trait_type = 'Color'`
-    // `UPDATE ${mainTable} SET image = '${cv}' WHERE id = 1;`
+    //`UPDATE ${attributesTable} SET value = 'Tequila on the rocks!' WHERE main_id = 0 AND trait_type = 'DrinkName'`
+    `UPDATE ${mainTable} SET image = 'https://demo.storj-ipfs.com/ipfs/Qmcd7eUxGLerxoXePLM43Vj4TSxYh6HqHCgDa7bfeLS9AD' WHERE id = 0;`
   );
   console.log(updateTable);
+
+  ///////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////
 }
 
 main()
